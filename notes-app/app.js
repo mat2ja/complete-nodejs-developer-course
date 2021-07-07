@@ -5,7 +5,8 @@ const getNotes = require('./notes.js');
 const titleMsg = chalk.bgKeyword('orange').black.italic;
 const bodyMsg = chalk.yellow.italic;
 
-yargs.version('1.1.0');
+// Customize yargs version
+yargs.version('1.0.0');
 
 // Add
 yargs.command({
