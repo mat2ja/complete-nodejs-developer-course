@@ -1,6 +1,10 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
+const successMsg = chalk.bgKeyword('lightgreen').black.italic;
+const warnMsg = chalk.bgKeyword('gold').black.italic;
+const dangerMsg = chalk.bgKeyword('orangered').black.italic;
+
 const getNotes = () => {
   return loadNotes();
 };
@@ -13,12 +17,23 @@ const addNote = (title, body) => {
     notes.push({
       title,
       body,
+      timestamp: new Date(),
     });
     saveNotes(notes);
-    console.log(chalk.keyword('lightgreen').italic('New note added'));
+    console.log(successMsg(' New note added! '));
   } else {
-    // todo: list note & offer overwrite
-    console.log(chalk.keyword('pink').italic('Note title taken'));
+    console.log(warnMsg(' Note title already taken! '));
+  }
+};
+
+const removeNote = (title) => {
+  const notes = loadNotes();
+  const notesToKeep = notes.filter((note) => note.title !== title);
+  if (notes.length > notesToKeep.length) {
+    console.log(dangerMsg(' Note removed! '));
+    saveNotes(notesToKeep);
+  } else {
+    console.log(warnMsg(' Note not found! '));
   }
 };
 
@@ -40,4 +55,5 @@ const loadNotes = () => {
 module.exports = {
   getNotes,
   addNote,
+  removeNote,
 };
