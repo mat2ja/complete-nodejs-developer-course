@@ -5,10 +5,17 @@ const fs = require('fs');
 //   author: 'Ryan Holiday'
 // }
 
-const bookJSON = JSON.stringify(book)
-fs.writeFileSync('1-json.json', bookJSON)
+// const bookJSON = JSON.stringify(book)
+// fs.writeFileSync('1-json.json', bookJSON)
 
-// dont need buffer if we parse it immediately
-const dataBuffer = fs.readFileSync('./1-json.json') 
-const dataJSON = dataBuffer.toString()
-const data = JSON.parse(dataJSON)
+// const dataBuffer = fs.readFileSync('./1-json.json') 
+// const dataJSON = dataBuffer.toString()
+// const data = JSON.parse(dataJSON)
+
+const jsonData = fs.readFileSync('1-json.json')
+const parsedData = JSON.parse(jsonData)
+
+parsedData.name = 'Matija'
+parsedData.age = 21
+
+fs.writeFileSync('1-json.json', JSON.stringify(parsedData))
