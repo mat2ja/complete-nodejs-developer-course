@@ -5,6 +5,7 @@ const successMsg = chalk.bgKeyword('lightgreen').black.italic;
 const warnMsg = chalk.bgKeyword('gold').black.italic;
 const dangerMsg = chalk.bgKeyword('orangered').black.italic;
 
+
 const getNotes = () => {
   return loadNotes();
 };
