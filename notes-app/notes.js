@@ -8,8 +8,6 @@ const titleMsg = chalk.bgKeyword('orange').black.italic;
 const titleAccent = chalk.keyword('orange').italic;
 const italicMsg = chalk.italic;
 
-const getNotes = () => loadNotes();
-
 const addNote = (title, body) => {
   const notes = loadNotes();
   const duplicateNote = notes.find((note) => note.title === title);
@@ -56,7 +54,7 @@ const readNote = (title) => {
   const note = notes.find((note) => note.title === title);
   if (note) {
     console.log(titleMsg(`\n ${note.title} `));
-    console.log(!!note.body ? `${chalk.italic(note.body)}\n` : '');
+    console.log(!!note.body ? `${italicMsg(note.body)}\n` : '');
   } else {
     console.log(dangerMsg(' Note not found! '));
   }
