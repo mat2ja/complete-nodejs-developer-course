@@ -2,16 +2,19 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const successMsg = chalk.bgKeyword('lightgreen').black.italic;
-const warnMsg = chalk.bgKeyword('gold').black.italic;
-const dangerMsg = chalk.bgKeyword('orangered').black.italic;
+const warnMsg = chalk.bgYellow.black.italic;
+const dangerMsg = chalk.bgRed.black.italic;
+const titleMsg = chalk.bgKeyword('orange').black.italic;
+const titleAccent = chalk.keyword('orange').italic;
+const italicMsg = chalk.italic;
 
 const getNotes = () => loadNotes();
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter((note) => note.title === title);
+  const duplicateNote = notes.find((note) => note.title === title);
 
-  if (!duplicateNotes.length) {
+  if (!duplicateNote) {
     notes.push({
       title,
       body,
@@ -28,23 +31,34 @@ const removeNote = (title) => {
   const notes = loadNotes();
   const notesToKeep = notes.filter((note) => note.title !== title);
   if (notes.length > notesToKeep.length) {
-    console.log(dangerMsg(' Note removed! '));
+    console.log(successMsg(' Note removed! '));
     saveNotes(notesToKeep);
   } else {
-    console.log(warnMsg(' Note not found! '));
+    console.log(dangerMsg(' Note not found! '));
   }
 };
 
 const listNotes = () => {
   const notes = loadNotes();
   if (notes.length) {
-    console.log(chalk.inverse('\n Your notes: '));
+    console.log(titleMsg('\n Your notes: '));
     notes.forEach((note) =>
-      console.log(`${chalk.keyword('orange')('-')} ${chalk.italic(note.title)}`)
+      console.log(`${titleAccent('-')} ${italicMsg(note.title)}`)
     );
     console.log();
   } else {
     console.log(warnMsg(' You dont have any notes! '));
+  }
+};
+
+const readNote = (title) => {
+  const notes = loadNotes();
+  const note = notes.find((note) => note.title === title);
+  if (note) {
+    console.log(titleMsg(`\n ${note.title} `));
+    console.log(!!note.body ? `${chalk.italic(note.body)}\n` : '');
+  } else {
+    console.log(dangerMsg(' Note not found! '));
   }
 };
 
@@ -68,4 +82,5 @@ module.exports = {
   addNote,
   removeNote,
   listNotes,
+  readNote,
 };
