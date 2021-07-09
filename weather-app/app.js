@@ -9,14 +9,21 @@ const [query] = yargs.argv._;
 
 const url = `http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${query}`;
 
-request({ url, json: true }, (error, response, body) => {
-  const { query } = body.request;
-  const { temperature, feelslike } = body.current;
-  console.log(accentMsg(query));
-  console.log(
-    `It is currently ${accentMsg(
-      temperature
-    )} degrees out. Feels like ${accentMsg(feelslike)} degrees tho.`
-  );
+request({ url, json: true }, (err, res, body) => {
+  if ('success' in body && !body.success) {
+    console.log(chalk.red(body.error.info));
+  } else {
+    const { query } = body.request;
+    const {
+      temperature,
+      feelslike,
+      weather_descriptions: [description],
+    } = body.current;
+    console.log(accentMsg(query));
+    console.log(
+      `${description}. It is currently ${accentMsg(
+        temperature
+      )} degrees out. Feels like ${accentMsg(feelslike)} degrees tho.`
+    );
+  }
 });
-
