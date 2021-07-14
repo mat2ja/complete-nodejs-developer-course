@@ -1,7 +1,7 @@
 require('dotenv').config();
-const request = require('request');
 const yargs = require('yargs');
 const chalk = require('chalk');
+const geocode = require('./utils/geocode');
 
 const accentMsg = chalk.yellow.bold;
 
@@ -32,16 +32,10 @@ const weatherUrl = `http://api.weatherstack.com/current?access_key=${process.env
 //   }
 // });
 
-const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${process.env.GEOCODE_API_KEY}&limit=1`;
-request({ url: geocodeUrl, json: true }, (error, response, body) => {
+geocode(query, (error, data) => {
   if (error) {
-    console.error(errorMsg('Unable to connect to geocode service.'));
-  } else if (!body.features.length) {
-    console.error(errorMsg('Unable to find location. Try another search.'));
+    console.log(errorMsg(error));
   } else {
-    const [query] = body.query;
-    const [feature] = body.features;
-    const [long, lat] = feature.center;
-    console.log(query, lat, long);
+    console.log(data);
   }
 });
