@@ -10,11 +10,10 @@ const geocode = (address, callback) => {
     } else if (!body.features.length) {
       callback('Unable to find location. Try another search.');
     } else {
-      const [feature] = body.features;
       const {
         place_name: location,
         center: [long, lat],
-      } = feature;
+      } = body.features[0];
       callback(null, {
         lat,
         long,
