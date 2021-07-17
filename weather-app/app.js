@@ -1,11 +1,15 @@
 require('dotenv').config();
-const yargs = require('yargs');
 const chalk = require('chalk');
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
 const errorMsg = chalk.red;
-const [query] = yargs.argv._;
+
+const query = !!process.argv[2] ? process.argv[2].toString().trim() : null;
+
+if (!query) {
+  return console.log(errorMsg('No location provided'));
+}
 
 geocode(query, (error, geoData) => {
   if (error) {
@@ -13,7 +17,7 @@ geocode(query, (error, geoData) => {
   }
   const { lat, long, location } = geoData;
 
-  forecast(lat + 20000, long, (error, forecastData) => {
+  forecast(lat, long, (error, forecastData) => {
     if (error) {
       return console.log(errorMsg(error));
     }
