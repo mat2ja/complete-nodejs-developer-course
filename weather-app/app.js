@@ -4,21 +4,20 @@ const chalk = require('chalk');
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
-const [query] = yargs.argv._;
 const errorMsg = chalk.red;
+const [query] = yargs.argv._;
 
-geocode(query, (error, data) => {
+geocode(query, (error, geoData) => {
   if (error) {
-    console.log(errorMsg(error));
-  } else {
-    console.log(data);
+    return console.log(errorMsg(error));
   }
-});
+  const { lat, long, location } = geoData;
 
-forecast(-75.7088, 44.1545, (error, data) => {
-  if (error) {
-    console.log(errorMsg(error));
-  } else {
-    console.log(data);
-  }
+  forecast(lat + 20000, long, (error, forecastData) => {
+    if (error) {
+      return console.log(errorMsg(error));
+    }
+    console.log(chalk.yellow(location));
+    console.log(forecastData);
+  });
 });
