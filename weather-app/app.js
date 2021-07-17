@@ -16,13 +16,12 @@ geocode(query, (error, geoData) => {
     return console.log(errorMsg(error));
   }
   const { lat, long, location } = geoData;
-  console.log(geoData);
 
-  // forecast(lat, long, (error, forecastData) => {
-  //   if (error) {
-  //     return console.log(errorMsg(error));
-  //   }
-  //   console.log(chalk.yellow(location));
-  //   console.log(forecastData);
-  // });
+  forecast(lat, long, (error, forecastData) => {
+    if (error) {
+      return console.log(errorMsg(error));
+    }
+    console.log(chalk.yellow(location));
+    console.log(forecastData);
+  });
 });
