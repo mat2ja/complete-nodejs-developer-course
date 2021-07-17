@@ -1,4 +1,4 @@
-const request = require('request');
+import request from 'request';
 
 const forecast = (long, lat, callback) => {
   const url = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=${lat},${long}&limit=1`;
@@ -21,4 +21,4 @@ const forecast = (long, lat, callback) => {
   });
 };
 
-module.exports = forecast;
+export default forecast;

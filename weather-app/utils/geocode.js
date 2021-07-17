@@ -1,4 +1,5 @@
-const request = require('request');
+// const request = require('request');
+import request from 'request';
 
 const geocode = (address, callback) => {
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
@@ -23,4 +24,4 @@ const geocode = (address, callback) => {
   });
 };
 
-module.exports = geocode;
+export default geocode;
