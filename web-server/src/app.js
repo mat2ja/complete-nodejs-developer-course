@@ -3,19 +3,18 @@ const express = require('express');
 
 const port = 3000;
 
-// console.log(__filename);
-console.log(__dirname);
-console.log(path.join(__dirname, '../public'));
+const publicDirectoryPath = path.join(__dirname, '../public');
 
 const app = express();
 
+app.use(express.static(publicDirectoryPath));
+//localhost:3000/indexxx.html
+
 app.get('/', (req, res) => {
-  // sending html
   res.send('<h1 style="font-family:sans-serif;">Hello Express 🌎</h1>');
 });
 
 app.get('/help', (req, res) => {
-  // sending json, automatically stringifies it
   res.send([
     {
       name: 'Matija',
