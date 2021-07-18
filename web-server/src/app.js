@@ -7,12 +7,8 @@ const publicDirectoryPath = path.join(__dirname, '../public');
 
 const app = express();
 
-app.use(express.static(publicDirectoryPath));
-//localhost:3000/indexxx.html
-
-app.get('/', (req, res) => {
-  res.send('<h1 style="font-family:sans-serif;">Hello Express 🌎</h1>');
-});
+//localhost:3000/public/index.html
+app.use('/public', express.static(publicDirectoryPath));
 
 app.get('/help', (req, res) => {
   res.send([
