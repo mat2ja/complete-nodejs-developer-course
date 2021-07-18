@@ -1,6 +1,11 @@
-import express from 'express';
+const path = require('path');
+const express = require('express');
 
 const port = 3000;
+
+// console.log(__filename);
+console.log(__dirname);
+console.log(path.join(__dirname, '../public'));
 
 const app = express();
 
