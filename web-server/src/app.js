@@ -4,33 +4,39 @@ const port = 3000;
 
 const app = express();
 
-
-// matijao.com
 app.get('/', (req, res) => {
-  res.send('Hello Express 🌎');
+  // sending html
+  res.send('<h1 style="font-family:sans-serif;">Hello Express 🌎</h1>');
 });
 
-// matijao.com/help
 app.get('/help', (req, res) => {
-  res.send("Help me i'm stuck 🤗");
+  // sending json, automatically stringifies it
+  res.send([
+    {
+      name: 'Matija',
+      age: 21,
+    },
+    {
+      name: 'Sara',
+      age: 22,
+    },
+  ]);
 });
 
-// matijao.com/about
 app.get('/about', (req, res) => {
-  res.send('about what ❓');
+  res.send('<h1>About</h1>');
 });
 
-// matijao.com/weather
 app.get('/weather', (req, res) => {
-  res.send('weather getting wetter ☔');
+  res.send({
+    forecast: 'pretty hot out here, 41 degrees',
+    location: 'donja prigornica',
+  });
 });
 
-// matijao.com/weather
 app.get('/*', (req, res) => {
   res.send('❌❌❌❌❌❌❌');
 });
-
-
 
 app.listen(port, () => {
   console.log(`🐕 Server is up on port ${port}`);
