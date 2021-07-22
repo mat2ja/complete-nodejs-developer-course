@@ -7,7 +7,12 @@ const publicDirectoryPath = path.join(__dirname, '../public');
 
 const app = express();
 
+app.set('view engine', 'hbs')
 app.use(express.static(publicDirectoryPath));
+
+app.get('/', (req, res) => {
+  res.render('index')
+})
 
 app.get('/weather', (req, res) => {
   res.send({
