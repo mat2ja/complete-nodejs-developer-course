@@ -2,11 +2,11 @@ body {
   font-family: sans-serif;
   padding: 3rem 1rem;
   margin: 0 auto;
+  text-align: center;
 }
 
 h1 {
   color: green;
-  text-align: center;
 }
 
 img {
