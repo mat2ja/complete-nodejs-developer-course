@@ -50,7 +50,8 @@ app.get('/weather', (req, res) => {
 app.get('/help/*', (req, res) => {
 	res.render('404', {
 		title: '404',
-		text: 'Help article not found'
+		errorMsg: 'Help article not found',
+		name: 'Matija Osrečki'
 	})
 });
 
@@ -58,7 +59,8 @@ app.get('/help/*', (req, res) => {
 app.get('*', (req, res) => {
 	res.render('404', {
 		title: '404',
-		text: 'Page not found'
+		errorMsg: 'Page not found',
+		name: 'Matija Osrečki'
 	})
 });
 
