@@ -11,9 +11,13 @@
 	</head>
 
 	<body>
-		<h1>{{title}}🗼</h1>
-		<p>Created by {{name}}</p>
-
+		{{> header}}
+		<main>
+			<p>
+				Created by {{name}}
+			</p>
+		</main>
+		{{> footer}}
 	</body>
 
 </html>
