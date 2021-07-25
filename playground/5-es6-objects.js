@@ -1,10 +1,10 @@
 // i already know this
 
 const product = {
-  label: 'macbook pro',
-  price: '1299',
-  stock: '301',
-  salePrice: undefined,
+	label: 'macbook pro',
+	price: '1299',
+	stock: '301',
+	salePrice: undefined,
 };
 
 const { label: productLabel, stock, windowsVersion, salePrice = 5 } = product;
@@ -13,8 +13,8 @@ const { label: productLabel, stock, windowsVersion, salePrice = 5 } = product;
 // console.log(windowsVersion); // prints undefined if not found
 // console.log(salePrice); // default value if prop not found or undefined (not found returns undefined)
 
-const transaction = (type, { label, price }) => {
-  console.log(`${type} >> ${label} costs $${price}`);
+const transaction = (type, { label, price = 9999 } = {}) => {
+	console.log(`${type} >> ${label} costs $${price}`);
 };
 
 transaction('order', product);
