@@ -12,9 +12,9 @@ const partialsPath = path.join(__dirname, '../templates/partials');
 
 // Setup handlebars engine and views location
 app.set('view engine', 'hbs');
-3
+3;
 app.set('views', viewsPath);
-hbs.registerPartials(partialsPath)
+hbs.registerPartials(partialsPath);
 
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
@@ -22,14 +22,14 @@ app.use(express.static(publicDirectoryPath));
 app.get('/', (req, res) => {
 	res.render('index', {
 		title: 'Weather',
-		name: 'Matija Osrečki'
+		name: 'Matija Osrečki',
 	});
 });
 
 app.get('/about', (req, res) => {
 	res.render('about', {
 		title: 'About',
-		name: 'Matija Osrečki'
+		name: 'Matija Osrečki',
 	});
 });
 
@@ -37,44 +37,40 @@ app.get('/help', (req, res) => {
 	res.render('help', {
 		title: 'Help',
 		helpText: 'Ya need some help',
-		name: 'Matija Osrečki'
+		name: 'Matija Osrečki',
 	});
 });
 
 app.get('/weather', (req, res) => {
-	res.send({
-		forecast: 'pretty hot out here, 41 degrees',
-		location: 'donja prigornica',
-	});
-});
+	console.log(req.query);
+	const { address } = req.query;
 
-app.get('/products', (req, res) => {
-	console.log('query:', req.query);
-	if (!req.query.search) {
+	if (!address) {
 		return res.send({
-			error: 'You must provide a search term'
-		})
+			error: 'You must provide an address',
+		});
 	}
 	res.send({
-		products: ['mx master 3', 'macbook air'],
-	})
-})
+		address,
+		location: address,
+		forecast: 'pretty hot out here, 41 degrees',
+	});
+});
 
 app.get('/help/*', (req, res) => {
 	res.render('404', {
 		title: '404',
 		errorMsg: 'Help article not found',
-		name: 'Matija Osrečki'
-	})
+		name: 'Matija Osrečki',
+	});
 });
-
 
 app.get('*', (req, res) => {
 	res.render('404', {
 		title: '404',
 		errorMsg: 'Page not found',
-		name: 'Matija Osrečki'
-	})
+		name: 'Matija Osrečki',
+	});
 });
 
 app.listen(port, () => {
