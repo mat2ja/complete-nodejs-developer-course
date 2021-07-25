@@ -56,13 +56,13 @@ app.get('/weather', (req, res) => {
 
 	geocode(address, (error, { lat, long, location } = {}) => {
 		if (error) {
-			return res.send({ error });
+			return res.status(500).send({ error });
 		}
 		forecast(lat, long, (error, forecast) => {
 			if (error) {
-				return res.send({ error: error });
+				return res.status(500).send({ error: error });
 			}
-			res.send({
+			res.status(200).send({
 				forecast,
 				location,
 				address,
