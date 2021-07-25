@@ -1,9 +1,14 @@
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
+const dotenv = require('dotenv');
+
+const geocode = require('./utils/geocode.js');
+const forecast = require('./utils/forecast.js');
 
 const port = 3000;
 const app = express();
+dotenv.config();
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
@@ -12,7 +17,6 @@ const partialsPath = path.join(__dirname, '../templates/partials');
 
 // Setup handlebars engine and views location
 app.set('view engine', 'hbs');
-3;
 app.set('views', viewsPath);
 hbs.registerPartials(partialsPath);
 
@@ -42,7 +46,6 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-	console.log(req.query);
 	const { address } = req.query;
 
 	if (!address) {
@@ -50,10 +53,21 @@ app.get('/weather', (req, res) => {
 			error: 'You must provide an address',
 		});
 	}
-	res.send({
-		address,
-		location: address,
-		forecast: 'pretty hot out here, 41 degrees',
+
+	geocode(address, (error, { lat, long, location } = {}) => {
+		if (error) {
+			return res.send({ error });
+		}
+		forecast(lat, long, (error, forecast) => {
+			if (error) {
+				return res.send({ error: error });
+			}
+			res.send({
+				forecast,
+				location,
+				address,
+			});
+		});
 	});
 });
 
