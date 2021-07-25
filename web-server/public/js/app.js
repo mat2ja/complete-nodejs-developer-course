@@ -9,6 +9,7 @@ const fetchWeather = async (query) => {
 	clearElement(messageSuccess);
 	clearElement(messageError);
 	setElement(messageLoading, 'Loading...');
+
 	await fetch(url)
 		.then((res) => res.json())
 		.then((data) => {
@@ -34,7 +35,6 @@ const messageLoading = document.querySelector('#message-loading');
 
 weatherForm.addEventListener('submit', async (e) => {
 	e.preventDefault();
-
 	const location = search.value;
 	await fetchWeather(location);
 	search.value = '';

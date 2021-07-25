@@ -93,8 +93,8 @@ form {
 
 button {
 	font: inherit;
-	padding: 0.4rem 1rem;
-	background: #d1d1d1;
+	padding: 0.5rem 1rem;
+	background: #cccccc;
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
@@ -103,11 +103,11 @@ button {
 }
 
 button:hover {
-	background: #c2c2c2;
+	background: #d1d1d1;
 }
 
 input {
 	border-radius: 5px;
-	border: 1px solid #b9b9b9;
+	border: 1px solid #cccccc;
 	padding: 0 0.5rem;
 }
