@@ -7,21 +7,31 @@ const fetchWeather = async (query) => {
 		.then((res) => res.json())
 		.then((data) => {
 			if (data.error) {
-				console.log(data.error);
+				messageError.textContent = data.error;
+				clearElement(messageSuccess);
 			} else {
-				console.log(data.location);
-				console.log(data.forecast);
+				messageSuccess.innerText = `${data.location}\n${data.forecast}`;
+				clearElement(messageError);
 			}
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			messageError.textContent = data.error;
+			clearElement(messageSuccess);
+		});
 };
+
+const clearElement = (elem) => (elem.textContent = '');
 
 const weatherForm = document.querySelector('form');
 const search = weatherForm.querySelector('input');
 
-weatherForm.addEventListener('submit', (e) => {
+const messageSuccess = document.querySelector('#message-success');
+const messageError = document.querySelector('#message-error');
+
+weatherForm.addEventListener('submit', async (e) => {
 	e.preventDefault();
+
 	const location = search.value;
-	fetchWeather(location);
-	location.value = '';
+	await fetchWeather(location);
+	search.value = '';
 });

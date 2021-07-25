@@ -82,3 +82,32 @@ header a {
 	width: 80%;
 	border-radius: 100rem;
 }
+
+#message-error {
+	color: #ef5350;
+}
+
+form {
+	display: flex;
+}
+
+button {
+	font: inherit;
+	padding: 0.4rem 1rem;
+	background: #d1d1d1;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 150ms ease-in-out;
+	margin-left: 0.5rem;
+}
+
+button:hover {
+	background: #c2c2c2;
+}
+
+input {
+	border-radius: 5px;
+	border: 1px solid #b9b9b9;
+	padding: 0 0.5rem;
+}
