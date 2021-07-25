@@ -23,7 +23,7 @@ a {
 }
 
 a:hover {
-	color: black;
+	color: #333333;
 }
 
 @counter-style repeating-emoji {
@@ -40,7 +40,7 @@ nav ul {
 
 nav li a {
 	display: block;
-	padding: 0.5rem 0.25rem;
+	padding: 0.75rem 0.25rem;
 }
 
 nav li {
@@ -68,8 +68,8 @@ header {
 }
 
 h1 {
-	font-size: 64px;
-	margin-bottom: 1rem;
+	font-size: 4rem;
+	margin-bottom: 0.5rem;
 }
 
 header a {

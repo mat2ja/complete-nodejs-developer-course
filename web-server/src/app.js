@@ -11,7 +11,8 @@ const viewsPath = path.join(__dirname, '../templates/views');
 const partialsPath = path.join(__dirname, '../templates/partials');
 
 // Setup handlebars engine and views location
-app.set('view engine', 'hbs');3
+app.set('view engine', 'hbs');
+3
 app.set('views', viewsPath);
 hbs.registerPartials(partialsPath)
 
@@ -20,7 +21,7 @@ app.use(express.static(publicDirectoryPath));
 
 app.get('/', (req, res) => {
 	res.render('index', {
-		title: 'Weather App' ,
+		title: 'Weather',
 		name: 'Matija Osrečki'
 	});
 });
@@ -46,6 +47,18 @@ app.get('/weather', (req, res) => {
 		location: 'donja prigornica',
 	});
 });
+
+app.get('/products', (req, res) => {
+	console.log('query:', req.query);
+	if (!req.query.search) {
+		return res.send({
+			error: 'You must provide a search term'
+		})
+	}
+	res.send({
+		products: ['mx master 3', 'macbook air'],
+	})
+})
 
 app.get('/help/*', (req, res) => {
 	res.render('404', {
