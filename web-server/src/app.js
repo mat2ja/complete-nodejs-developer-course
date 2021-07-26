@@ -6,7 +6,8 @@ const dotenv = require('dotenv');
 const geocode = require('./utils/geocode.js');
 const forecast = require('./utils/forecast.js');
 
-const port = 3000;
+// setting port for heroku
+const port = process.env.PORT || 3000;
 const app = express();
 dotenv.config();
 

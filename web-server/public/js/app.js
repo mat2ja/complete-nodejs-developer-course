@@ -4,7 +4,7 @@ const clearElement = (elem) => (elem.textContent = '');
 const setElement = (elem, content) => (elem.innerText = content);
 
 const fetchWeather = async (query) => {
-	const url = `http://localhost:3000/weather?address=${query}`;
+	const url = `/weather?address=${query}`;
 
 	clearElement(messageSuccess);
 	clearElement(messageError);
