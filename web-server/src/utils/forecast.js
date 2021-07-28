@@ -12,9 +12,16 @@ const forecast = (long, lat, callback) => {
 				temperature,
 				feelslike,
 				weather_descriptions: [description],
+				wind_speed,
+				is_day,
+				humidity
 			} = body.current;
 
-			const forecastMsg = `${description}. It is currently ${temperature} degrees out. Feels like ${feelslike} degrees tho.`;
+			const forecastMsg =
+				`${description}. ${is_day === 'no' ? 'Night' : 'Day'}.
+				It is currently ${temperature} degrees out. Feels like ${feelslike} degrees tho.
+				Wind speed be like ${wind_speed} km/h. Humidity? ${humidity}%.
+			`;
 
 			callback(null, forecastMsg);
 		}
