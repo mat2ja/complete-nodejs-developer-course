@@ -1,18 +1,23 @@
 // CRUD create read update delete
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
-const connectionURL = 'mongodb://127.0.0.1:27017' // kao ima issue sa localhost, uspor, bumo vidli
+const url = 'mongodb://localhost:27017'
 const dbName = 'task-manager'
 
-//  useUnifiedTopology: true umjesto parsera
-MongoClient.connect(connectionURL, { useNewUrlParser: true }, async (error, client) => {
-    if (error) {
-        return console.log('Unable to connect to database');
-    }
+// creating an instance
+const client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+
+const mongoConnect = async () => {
+    await client.connect()
+
     const db = client.db(dbName)
 
     try {
         const tasks = db.collection('tasks')
+
         const result = await tasks.insertMany([
             {
                 description: 'fix bike',
@@ -31,4 +36,8 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, async (error, clie
     } catch (error) {
         console.log(error.message);
     }
-})
+}
+
+mongoConnect()
+    .catch(console.error)
+    .finally(() => client.close())
