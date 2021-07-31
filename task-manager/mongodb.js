@@ -17,8 +17,8 @@ const mongoConnect = async () => {
     try {
         const users = db.collection('users')
 
-        const user = await users.findOne({ _id: ObjectId ('61057cad2b137c032723d242') })
-        console.log(user);
+        const found = await users.find({ name: 'marin' }).toArray()
+        console.log(found);
     } catch (error) {
         console.log(error.message);
     }
