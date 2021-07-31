@@ -18,16 +18,10 @@ const mongoConnect = async () => {
         const users = db.collection('users')
         const tasks = db.collection('tasks')
 
-        // const found = await users
-        //     .find({ name: /^ma*/i })
-        //     .sort({ age: -1 })
-        //     .limit(2)
-        //     .toArray()
-
-        // console.log(found);
-
         const latest = await tasks.findOne({}, { sort: { $natural: -1 } })
         console.log(latest);
+
+        await tasks.findOneAndUpdate({ 'description': 'fix bike' }, { $set: { 'completed': true } })
 
         // toArray needs await
         const unfinished = await tasks.find({ 'completed': false }).toArray()
