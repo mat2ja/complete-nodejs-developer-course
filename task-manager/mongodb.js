@@ -9,30 +9,19 @@ const client = new MongoClient(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-
-const id = ObjectId()
-console.log(id);
-console.log(id.id);
-console.log(id.id.length);
-console.log(id.toHexString());
-console.log(id.toHexString().length);
-
 const mongoConnect = async () => {
     await client.connect()
 
     const db = client.db(dbName)
 
-    // try {
-    //     const users = db.collection('users')
+    try {
+        const users = db.collection('users')
 
-    //     const result = await users.insertOne({
-    //         name: 'jakov',
-    //         age: 55
-    //     })
-    //     console.log(result.insertedId);
-    // } catch (error) {
-    //     console.log(error.message);
-    // }
+        const user = await users.findOne({ _id: ObjectId ('61057cad2b137c032723d242') })
+        console.log(user);
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 mongoConnect()
