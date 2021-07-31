@@ -14,6 +14,8 @@ const id = ObjectId()
 console.log(id);
 console.log(id.id);
 console.log(id.id.length);
+console.log(id.toHexString());
+console.log(id.toHexString().length);
 
 const mongoConnect = async () => {
     await client.connect()
