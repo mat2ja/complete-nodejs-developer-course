@@ -11,41 +11,19 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, async (error, clie
     }
     const db = client.db(dbName)
 
-    //* callbacks (doesnt even handle error)
-    db.collection('users').insertOne({
-        name: 'matija',
-        age: 21
-    }, (error, result) => {
-        if (error) {
-            return console.log('Unable to insert user 🥑');
-        }
-        console.log(result.insertedId);
-    })
-
-    //* promises
-    db.collection('users').insertOne({
-        name: 'matija',
-        age: 21
-    }).then(result => console.log(result.insertedId))
-        .catch(err => console.log('Unable to insert user 🥶'))
-
-    //* async/await
-    const result = await db.collection('users').insertOne({
-        name: 'matija',
-        age: 21
-    })
-        .catch(error => console.log('Unable to insert user 🥵'))
-    if (result) {
-        console.log(result.insertedId);
-    }
-
-    //* async/await trycatch
     try {
-        const result = await db.collection('users').insertOne({
-            name: 'matija',
-            age: 21
-        })
-        console.log(result.insertedId);
+        const result = await db.collection('users').insertMany([
+            {
+                name: 'matija',
+                age: 21
+            },
+            {
+                name: 'jen',
+                age: 43
+            }
+        ])
+        console.log('insertedIds:', result.insertedIds);
+        console.log('insertedCount:', result.insertedCount);
     } catch (error) {
         console.log('Unable to insert user 🦎')
     }
