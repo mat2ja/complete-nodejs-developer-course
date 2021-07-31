@@ -12,19 +12,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, async (error, clie
     const db = client.db(dbName)
 
     try {
-        const result = await db.collection('users').insertMany([
+        const tasks = db.collection('tasks')
+        const result = await tasks.insertMany([
             {
-                name: 'matija',
-                age: 21
+                description: 'fix bike',
+                completed: false
             },
             {
-                name: 'jen',
-                age: 43
-            }
+                description: 'setup bitwarden',
+                completed: false
+            },
+            {
+                description: 'study mongo',
+                completed: true
+            },
         ])
-        console.log('insertedIds:', result.insertedIds);
-        console.log('insertedCount:', result.insertedCount);
+        console.log(result.insertedIds);
     } catch (error) {
-        console.log('Unable to insert user 🦎')
+        console.log(error.message);
     }
 })
