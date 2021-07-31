@@ -11,26 +11,26 @@ const client = new MongoClient(url, {
 })
 
 const id = ObjectId()
+console.log(id);
+console.log(id.id);
+console.log(id.id.length);
 
 const mongoConnect = async () => {
     await client.connect()
 
     const db = client.db(dbName)
 
-    try {
-        const users = db.collection('users')
+    // try {
+    //     const users = db.collection('users')
 
-        const result = await users.insertOne(
-            {
-                _id: id,
-                name: 'jakov',
-                age: 55
-            },
-        )
-        console.log(result.insertedId);
-    } catch (error) {
-        console.log(error.message);
-    }
+    //     const result = await users.insertOne({
+    //         name: 'jakov',
+    //         age: 55
+    //     })
+    //     console.log(result.insertedId);
+    // } catch (error) {
+    //     console.log(error.message);
+    // }
 }
 
 mongoConnect()
