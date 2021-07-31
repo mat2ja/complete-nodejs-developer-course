@@ -11,12 +11,6 @@ const client = new MongoClient(url, {
 })
 
 const id = ObjectId()
-console.log(id);
-console.log(id.toString());
-console.log(id.toHexString());
-console.log(id.valueOf());
-console.log(id.getTimestamp());
-console.log(id.inspect())
 
 const mongoConnect = async () => {
     await client.connect()
@@ -24,23 +18,16 @@ const mongoConnect = async () => {
     const db = client.db(dbName)
 
     try {
-        const tasks = db.collection('tasks')
+        const users = db.collection('users')
 
-        // const result = await tasks.insertMany([
-        //     {
-        //         description: 'fix bike',
-        //         completed: false
-        //     },
-        //     {
-        //         description: 'setup bitwarden',
-        //         completed: false
-        //     },
-        //     {
-        //         description: 'study mongo',
-        //         completed: true
-        //     },
-        // ])
-        // console.log(result.insertedIds);
+        const result = await users.insertOne(
+            {
+                _id: id,
+                name: 'jakov',
+                age: 55
+            },
+        )
+        console.log(result.insertedId);
     } catch (error) {
         console.log(error.message);
     }
