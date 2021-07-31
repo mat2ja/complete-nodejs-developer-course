@@ -22,6 +22,7 @@ const mongoConnect = async () => {
         console.log(latest);
 
         await tasks.findOneAndUpdate({ 'description': 'fix bike' }, { $set: { 'completed': true } })
+        await tasks.updateOne({ 'description': 'fix bike' }, { $set: { 'description': 'popravit bajk' } })
 
         // toArray needs await
         const unfinished = await tasks.find({ 'completed': false }).toArray()
