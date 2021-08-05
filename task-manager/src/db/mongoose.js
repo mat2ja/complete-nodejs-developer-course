@@ -9,22 +9,28 @@ mongoose.connect(`${url}/${dbName}`, {
     useCreateIndex: true
 })
 
-// const db = mongoose.connection
+const db = mongoose.connection
 
-const User = mongoose.model('User', {
-    name: {
-        type: String
-    },
-    age: {
-        type: Number
-    }
+db.on('error', () => console.error('connection error'))
+db.once('open', () => {
+    console.log('connected successfully')
+
+    const User = mongoose.model('User', {
+        name: {
+            type: String
+        },
+        age: {
+            type: Number
+        }
+    })
+
+    const me = new User({
+        name: 'marin',
+        age: 20
+    })
+
+    me.save()
+        .then((u) => console.log(u))
+        .catch(err => console.log(err))
 })
 
-const me = new User({
-    name: 'matija',
-    age: 21
-})
-
-me.save()
-    .then((u) => console.log(u))
-    .catch(err => console.log(err.message))
