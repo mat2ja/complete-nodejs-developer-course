@@ -6,32 +6,30 @@ const dbName = 'task-manager';
 
 // creating an instance
 const client = new MongoClient(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
 });
 
 const mongoConnect = async () => {
-    await client.connect();
+	await client.connect();
 
-    const db = client.db(dbName);
+	const db = client.db(dbName);
 
-    try {
-        const users = db.collection('users');
-        const tasks = db.collection('tasks');
+	try {
+		const users = db.collection('users');
+		const tasks = db.collection('tasks');
 
-        try {
-            const res = await tasks.deleteOne({ description: 'setup bitwarden' })
-            console.log(res);
-        } catch (error) {
-            console.log(error.message);
-        }
-
-
-    } catch (error) {
-        console.log(error.message);
-    }
+		try {
+			const res = await tasks.deleteOne({ description: 'setup bitwarden' });
+			console.log(res);
+		} catch (error) {
+			console.log(error.message);
+		}
+	} catch (error) {
+		console.log(error.message);
+	}
 };
 
 mongoConnect()
-    .catch(console.error)
-    .finally(() => client.close());
+	.catch(console.error)
+	.finally(() => client.close());
