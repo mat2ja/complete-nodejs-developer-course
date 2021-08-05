@@ -19,21 +19,24 @@ const mongoConnect = async () => {
 		const users = db.collection('users');
 		const tasks = db.collection('tasks');
 
-		const updatePromise = users.updateMany(
+		const updatePromise = tasks.updateMany(
+			{},
 			{
-				age: {
-					$lte: 20,
-				},
-			},
-			{
-				$inc: {
-					age: 1,
+				$set: {
+					completed: true,
 				},
 			}
 		);
 
 		const res = await updatePromise;
 		console.log(res);
+
+		const completed = await tasks
+			.find({
+				completed: true,
+			})
+			.toArray();
+		console.log('Completed tasks', completed);
 	} catch (error) {
 		console.log(error.message);
 	}
