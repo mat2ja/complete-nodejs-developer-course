@@ -3,7 +3,7 @@ const doWorkCallback = (callback) => {
 		Math.random() < 0.5
 			? callback('This is my error')
 			: callback(undefined, [1, 4, 7]);
-	}, 2000);
+	}, 1000);
 };
 
 doWorkCallback((error, result) => {
