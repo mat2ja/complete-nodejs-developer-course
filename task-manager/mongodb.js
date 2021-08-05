@@ -1,5 +1,5 @@
 // CRUD create read update delete
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'task-manager'
@@ -9,6 +9,7 @@ const client = new MongoClient(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
+
 const mongoConnect = async () => {
     await client.connect()
 
