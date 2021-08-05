@@ -20,7 +20,7 @@ const mongoConnect = async () => {
         const tasks = db.collection('tasks');
 
         try {
-            const res = await users.deleteOne({ name: 'patrik' })
+            const res = await users.deleteMany({ age: { $gte: 43 } })
             console.log(res);
         } catch (error) {
             console.log(error.message);
