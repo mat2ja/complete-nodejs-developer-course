@@ -25,15 +25,19 @@ const mongoConnect = async () => {
 			},
 			{
 				$set: {
-					name: 'Mike',
+					name: 'juraj',
+				},
+				$unset: {
+					age: '',
+				},
+				$currentDate: {
+					date: true,
 				},
 			}
 		);
 
-		// ne radi mi
-		updatePromise()
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+		const res = await updatePromise;
+		console.log(res);
 	} catch (error) {
 		console.log(error.message);
 	}
