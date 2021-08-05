@@ -12,7 +12,7 @@ mongoose.connect(`${url}/${dbName}`, {
 const db = mongoose.connection
 
 db.on('error', () => console.error('connection error'))
-db.once('open', () => {
+db.once('open', async () => {
     console.log('connected successfully')
 
     const User = mongoose.model('User', {
@@ -25,12 +25,15 @@ db.once('open', () => {
     })
 
     const me = new User({
-        name: 'marin',
-        age: 20
+        name: 'laura',
+        age: 19
     })
 
-    me.save()
-        .then((u) => console.log(u))
-        .catch(err => console.log(err))
+    try {
+        const user = await me.save()
+        console.log(user);
+    } catch (error) {
+        console.log(error.message);
+    }
 })
 
