@@ -19,15 +19,15 @@ const mongoConnect = async () => {
 		const users = db.collection('users');
 		const tasks = db.collection('tasks');
 
-		const updatePromise = users.updateOne(
+		const updatePromise = users.updateMany(
 			{
-				_id: new ObjectId('610578c927e6f2d800e3634b'),
+				age: {
+					$lte: 20,
+				},
 			},
 			{
-				$inc: { age: 2, cars: 10 },
-				$currentDate: {
-					lastModified: true,
-					'cancellation.date': { $type: 'timestamp' },
+				$inc: {
+					age: 1,
 				},
 			}
 		);
