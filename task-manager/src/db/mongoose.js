@@ -13,28 +13,31 @@ const db = mongoose.connection;
 
 db.on('error', () => console.error('connection error'));
 db.once('open', async () => {
-	console.log('connected successfully');
-
-	const taskSchema = new mongoose.Schema({
-		description: {
+	const userSchema = new mongoose.Schema({
+		name: {
 			type: String,
+			required: [true, 'Name not given'],
+			minLength: 2,
 		},
-		completed: {
-			type: Boolean,
+		age: {
+			type: Number,
+			min: [12, 'Too young'],
+			max: 120,
 		},
 	});
 
-	const Task = new mongoose.model('Task', taskSchema);
+	const User = new mongoose.model('User', userSchema);
 
-	const task = new Task({
-		description: 'uciti mongo',
-		completed: false,
+	const user = new User({
+		age: 11,
 	});
 
 	try {
-		const res = await task.save();
+		const res = await user.save();
 		console.log(res);
 	} catch (error) {
 		console.log(error.message);
 	}
+
+	mongoose.disconnect();
 });
