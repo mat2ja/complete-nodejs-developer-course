@@ -20,27 +20,8 @@ const mongoConnect = async () => {
         const tasks = db.collection('tasks');
 
         try {
-            const { matchedCount, modifiedCount, upsertedCount } = await tasks.updateMany(
-                {},
-                {
-                    $setd: {
-                        completed: true,
-                    },
-                }
-            );
-            console.log(`Matched ${matchedCount}, modified: ${modifiedCount}`);
-            console.log('Upserted:', upsertedCount);
-        } catch (error) {
-            console.log(error.message);
-        }
-
-        try {
-            const completed = await tasks
-                .find({
-                    completed: true,
-                })
-                .toArray();
-            console.log('Completed tasks', completed);
+            const res = await users.deleteOne({ name: 'patrik' })
+            console.log(res);
         } catch (error) {
             console.log(error.message);
         }
