@@ -15,23 +15,25 @@ db.on('error', () => console.error('connection error'))
 db.once('open', async () => {
     console.log('connected successfully')
 
-    const User = mongoose.model('User', {
+    const taskSchema = new mongoose.Schema({
         name: {
             type: String
         },
-        age: {
-            type: Number
+        completed: {
+            type: Boolean
         }
     })
 
-    const me = new User({
-        name: 'laura',
-        age: 19
+    const Task = new mongoose.model('Task', taskSchema)
+
+    const task = new Task({
+        name: 'uciti mongo',
+        completed: false
     })
 
     try {
-        const user = await me.save()
-        console.log(user);
+        const res = await task.save()
+        console.log(res);
     } catch (error) {
         console.log(error.message);
     }
