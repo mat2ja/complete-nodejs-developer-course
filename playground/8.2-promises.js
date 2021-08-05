@@ -8,13 +8,11 @@ const doWorkPromise = new Promise((resolve, reject) => {
 // 	.then((result) => console.log('Success:', result))
 // 	.catch((error) => console.log('Error:', error));
 
-const main = async () => {
+const main = (async () => {
 	try {
 		const result = await doWorkPromise;
 		console.log('Success:', result);
 	} catch (error) {
 		console.log('Error:', error);
 	}
-};
-
-main();
+})();
