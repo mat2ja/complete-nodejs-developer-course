@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 
 const url = 'mongodb://localhost:27017';
 const dbName = 'task-manager-api';
@@ -17,7 +18,16 @@ db.once('open', async () => {
 		name: {
 			type: String,
 			required: [true, 'Name not provided'],
-			minLength: 2,
+			minLength: [2, 'Name too short'],
+		},
+		email: {
+			type: String,
+			required: [true, 'Email not provided'],
+			validate(value) {
+				if (!validator.isEmail(value)) {
+					throw new Error('Email not valid');
+				}
+			},
 		},
 		age: {
 			type: Number,
@@ -37,8 +47,9 @@ db.once('open', async () => {
 	const User = new mongoose.model('User', userSchema);
 
 	const user = new User({
-		name: 'mirna',
-		age: 24,
+		name: 'm',
+		email: 'mirnahotmail.eu',
+		age: -245,
 	});
 
 	try {
