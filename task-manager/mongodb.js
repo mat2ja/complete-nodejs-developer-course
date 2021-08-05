@@ -21,17 +21,13 @@ const mongoConnect = async () => {
 
 		const updatePromise = users.updateOne(
 			{
-				_id: new ObjectId('6105933695834089d58ecbd7'),
+				_id: new ObjectId('610578c927e6f2d800e3634b'),
 			},
 			{
-				$set: {
-					name: 'juraj',
-				},
-				$unset: {
-					age: '',
-				},
+				$inc: { age: 2, cars: 10 },
 				$currentDate: {
-					date: true,
+					lastModified: true,
+					'cancellation.date': { $type: 'timestamp' },
 				},
 			}
 		);
