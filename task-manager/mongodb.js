@@ -1,40 +1,44 @@
 // CRUD create read update delete
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
-const url = 'mongodb://localhost:27017'
-const dbName = 'task-manager'
+const url = 'mongodb://localhost:27017';
+const dbName = 'task-manager';
 
 // creating an instance
 const client = new MongoClient(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 const mongoConnect = async () => {
-    await client.connect()
+	await client.connect();
 
-    const db = client.db(dbName)
+	const db = client.db(dbName);
 
-    try {
-        const users = db.collection('users')
-        const tasks = db.collection('tasks')
+	try {
+		const users = db.collection('users');
+		const tasks = db.collection('tasks');
 
-        const latest = await tasks.findOne({}, { sort: { $natural: -1 } })
-        console.log(latest);
+		const updatePromise = users.updateOne(
+			{
+				_id: new ObjectId('6105933695834089d58ecbd7'),
+			},
+			{
+				$set: {
+					name: 'Mike',
+				},
+			}
+		);
 
-        await tasks.findOneAndUpdate({ 'description': 'fix bike' }, { $set: { 'completed': true } })
-        await tasks.updateOne({ 'description': 'fix bike' }, { $set: { 'description': 'popravit bajk' } })
-
-        // toArray needs await
-        const unfinished = await tasks.find({ 'completed': false }).toArray()
-        console.log('unfinished:', unfinished);
-
-
-    } catch (error) {
-        console.log(error.message);
-    }
-}
+		// ne radi mi
+		updatePromise()
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	} catch (error) {
+		console.log(error.message);
+	}
+};
 
 mongoConnect()
-    .catch(console.error)
-    .finally(() => client.close())
+	.catch(console.error)
+	.finally(() => client.close());

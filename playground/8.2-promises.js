@@ -4,15 +4,6 @@ const doWorkPromise = new Promise((resolve, reject) => {
 	}, 1000);
 });
 
-// doWorkPromise
-// 	.then((result) => console.log('Success:', result))
-// 	.catch((error) => console.log('Error:', error));
-
-const main = (async () => {
-	try {
-		const result = await doWorkPromise;
-		console.log('Success:', result);
-	} catch (error) {
-		console.log('Error:', error);
-	}
-})();
+doWorkPromise
+	.then((result) => console.log('Success:', result))
+	.catch((error) => console.log('Error:', error));
