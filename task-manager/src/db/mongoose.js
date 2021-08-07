@@ -39,8 +39,9 @@ db.once('open', async () => {
 			type: String,
 			required: true,
 			trim: true,
+			minLength: 6,
 			validate(value) {
-				if (value.includes('password')) {
+				if (value.toLowerCase().includes('password')) {
 					throw new Error(`Password can't contain word 'password'`);
 				}
 			},
@@ -67,11 +68,11 @@ db.once('open', async () => {
 	const User = new mongoose.model('User', userSchema);
 
 	const user = new User({
-		name: 'marian',
-		email: 'marian.code@zm.eu',
-		password: 'vueisbetter',
-		age: 21,
-		nickname: 'bill gates',
+		name: 'petar',
+		email: 'petar.sapunar@infokarta.hr',
+		password: '        vue je zakon  ',
+		age: 30,
+		nickname: 'sapun',
 	});
 
 	try {
