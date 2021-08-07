@@ -22,6 +22,7 @@ db.once('open', async () => {
 			required: [true, 'Name not provided'],
 			minLength: [2, 'Name too short'],
 			trim: true,
+			lowercase: true,
 		},
 		email: {
 			type: String,
@@ -31,6 +32,16 @@ db.once('open', async () => {
 			validate(value) {
 				if (!isEmail(value)) {
 					throw new Error('Email not valid');
+				}
+			},
+		},
+		password: {
+			type: String,
+			required: true,
+			trim: true,
+			validate(value) {
+				if (value.includes('password')) {
+					throw new Error(`Password can't contain word 'password'`);
 				}
 			},
 		},
@@ -44,20 +55,23 @@ db.once('open', async () => {
 					throw new Error('Age must be a whole number');
 				}
 			},
-			min: [12, 'Too young'],
 			max: [120, 'Too old'],
+			default: 0,
 		},
 		nickname: {
 			type: String,
-			default: 'genericky'
-		}
+			default: 'genericky',
+		},
 	});
 
 	const User = new mongoose.model('User', userSchema);
 
 	const user = new User({
-		name: 'patrik',
-		email: 'patrik@hotmail.com',
+		name: 'marian',
+		email: 'marian.code@zm.eu',
+		password: 'vueisbetter',
+		age: 21,
+		nickname: 'bill gates',
 	});
 
 	try {
