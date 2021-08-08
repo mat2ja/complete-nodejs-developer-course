@@ -1,7 +1,7 @@
 import express from 'express';
 import './db/mongoose.js';
-import User from './models/user.js';
-import Task from './models/task.js';
+import model from './models/index.js';
+const { User, Task } = model;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,8 +12,7 @@ app.post('/users', async (req, res) => {
 	const user = new User(req.body);
 	try {
 		await user.save();
-		res.send(user);
-		console.log(user);
+		res.status(201).send(user);
 	} catch (error) {
 		// https://httpstatuses.com/
 		res.status(400).send(error);
@@ -24,8 +23,7 @@ app.post('/tasks', async (req, res) => {
 	const task = new Task(req.body);
 	try {
 		await task.save();
-		res.send(task);
-		console.log(task);
+		res.status(201).send(task);
 	} catch (error) {
 		res.status(400).send(error);
 	}

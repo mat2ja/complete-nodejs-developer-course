@@ -12,6 +12,4 @@ mongoose.connect(`${url}/${dbName}`, {
 const db = mongoose.connection;
 
 db.on('error', () => console.error('connection error'));
-db.once('open', async () => {
-	console.log('🐦 mongoose up and running');
-});
+db.once('open', async () => console.log('🐦 mongoose up and running 🐤'));
