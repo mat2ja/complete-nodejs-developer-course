@@ -55,4 +55,27 @@ app.post('/tasks', async (req, res) => {
 	}
 });
 
+// Fetch all tasks
+app.get('/tasks', async (req, res) => {
+	try {
+		const tasks = await Task.find({});
+		res.send(tasks);
+	} catch (error) {
+		res.status(400).send();
+	}
+});
+
+// Fetch a specific tasj by id
+app.get('/tasks/:id', async (req, res) => {
+	const _id = req.params.id;
+	try {
+		const task = await Task.findById(_id);
+		task
+			? res.status(202).send(task)
+			: res.status(404).send({ error: 'Task not found' });
+	} catch (error) {
+		res.status(400).send({ error: 'Error fetching task' });
+	}
+});
+
 app.listen(port, () => console.log(`Server is up on port:${port}`));
