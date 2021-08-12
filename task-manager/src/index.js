@@ -36,9 +36,10 @@ app.get('/users/:id', async (req, res) => {
 	const _id = req.params.id;
 	try {
 		const user = await User.findById(_id);
-		user
-			? res.status(202).send(user)
-			: res.status(404).send({ error: 'User not found' });
+		if (!user) {
+			return res.status(404).send({ error: 'User not found' });
+		}
+		res.status(202).send(user);
 	} catch (error) {
 		res.status(400).send({ error: 'Error fetching user' });
 	}
@@ -65,14 +66,15 @@ app.get('/tasks', async (req, res) => {
 	}
 });
 
-// Fetch a specific tasj by id
+// Fetch a specific task by id
 app.get('/tasks/:id', async (req, res) => {
 	const _id = req.params.id;
 	try {
 		const task = await Task.findById(_id);
-		task
-			? res.status(202).send(task)
-			: res.status(404).send({ error: 'Task not found' });
+		if (!task) {
+			return res.status(404).send({ error: 'Task not found' });
+		}
+		res.status(202).send(task);
 	} catch (error) {
 		res.status(400).send({ error: 'Error fetching task' });
 	}
