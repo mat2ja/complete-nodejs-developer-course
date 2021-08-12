@@ -6,6 +6,7 @@ const add = (a, b) => {
 	});
 };
 
+// nested promises
 add(1, 2)
 	.then((sum) => {
 		console.log(sum);
@@ -16,6 +17,7 @@ add(1, 2)
 	})
 	.catch((e) => console.log(e));
 
+// returning a promise
 add(1, 1)
 	.then((sum) => {
 		console.log(sum);
