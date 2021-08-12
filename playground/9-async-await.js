@@ -1,8 +1,8 @@
 const doWork = async () => {
+    // throw new Error('Something went crauuzy')
     return 'bitcoin'
 }
 
-console.log(doWork());
-
 doWork()
-    .then(res => console.log(res))
+    .then(res => console.log('res:', res))
+    .catch(e => console.log('e: ', e))
