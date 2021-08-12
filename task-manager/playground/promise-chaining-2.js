@@ -10,7 +10,7 @@ const deleteTaskAndCount = async (id) => {
 
 deleteTaskAndCount('610feb2bb0fc1d60fb5b114b')
     .then(({ task, uncompleted }) => {
-        console.log('Removed: ', task);
+        console.log('Removed:', task);
         console.log(`There are ${uncompleted} tasks yet to be completed`);
     })
     .catch(error => console.log(error.message))
