@@ -11,3 +11,17 @@ app.use(userRouter)
 app.use(taskRouter)
 
 app.listen(port, () => console.log(`Server is up on port:${port}`));
+
+import bcript from 'bcryptjs'
+
+const myFn = async () => {
+    const password = 'hunter23'
+    const hashedPassword = await bcript.hash(password, 8)
+    console.log(password);
+    console.log(hashedPassword);
+
+    const isMatch = await bcript.compare(password, hashedPassword)
+    console.log('isMatch:', isMatch);
+}
+
+myFn()
