@@ -9,6 +9,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+/**
+ * * * * * * * * * * * * * * * USERS * * * * * * * * * * * * * *
+ */
+
 // Add a new user
 app.post('/users', async (req, res) => {
 	const user = new User(req.body);
@@ -31,7 +35,7 @@ app.get('/users', async (req, res) => {
 	}
 });
 
-// Fetch a specific user by id
+// Fetch a user by id
 app.get('/users/:id', async (req, res) => {
 	const _id = req.params.id;
 	try {
@@ -66,6 +70,26 @@ app.patch('/users/:id', async (req, res) => {
 	}
 })
 
+// Delete a user
+app.delete('/users/:id', async (req, res) => {
+	try {
+		const user = await User.findByIdAndDelete(req.params.id)
+		console.log(user);
+		if (!user) {
+			return res.status(404).send({ error: 'User not found' });
+		}
+		return res.status(200).send(user)
+	} catch (error) {
+		res.status(500).send({ error });
+	}
+})
+
+
+/**
+ * * * * * * * * * * * * * * * TASKS * * * * * * * * * * * * * *
+ */
+
+
 // Add a new task 
 app.post('/tasks', async (req, res) => {
 	const task = new Task(req.body);
@@ -77,6 +101,7 @@ app.post('/tasks', async (req, res) => {
 	}
 });
 
+
 // Fetch all tasks
 app.get('/tasks', async (req, res) => {
 	try {
@@ -87,7 +112,7 @@ app.get('/tasks', async (req, res) => {
 	}
 });
 
-// Fetch a specific task by id
+// Fetch a task by id
 app.get('/tasks/:id', async (req, res) => {
 	const _id = req.params.id;
 	try {
@@ -101,6 +126,7 @@ app.get('/tasks/:id', async (req, res) => {
 	}
 });
 
+// Update a task
 app.patch('/tasks/:id', async (req, res) => {
 	const updates = Object.keys(req.body)
 	const allowedUpdates = ['description', 'completed']
