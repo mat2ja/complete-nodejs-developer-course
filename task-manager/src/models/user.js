@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcript from 'bcryptjs'
 
 const { Schema } = mongoose;
 const { isEmail } = validator;
@@ -48,6 +49,15 @@ const userSchema = new Schema({
 		max: [120, 'Too old'],
 	},
 });
+
+userSchema.pre('save', async function (next) {
+	const user = this
+	if (user.isModified('password')) {
+		user.password = await bcript.hash(user.password, 8)
+	}
+
+	next()
+})
 
 const User = new mongoose.model('User', userSchema);
 
