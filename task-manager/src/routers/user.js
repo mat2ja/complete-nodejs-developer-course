@@ -19,11 +19,10 @@ router.post('/users', async (req, res) => {
 router.post('/users/login', async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		console.log(email, password);
 		const user = await User.findByCredentials(email, password);
 		res.send(user);
-	} catch (err) {
-		res.status(400).send();
+	} catch (error) {
+		res.status(400).send({ error: error.message });
 	}
 });
 
