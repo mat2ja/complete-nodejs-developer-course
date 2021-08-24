@@ -50,17 +50,29 @@ const userSchema = new Schema({
 		},
 		max: [120, 'Too old'],
 	},
+	tokens: [
+		{
+			token: {
+				type: String,
+				required: true,
+			},
+		},
+	],
 });
 
 userSchema.methods.generateAuthToken = async function () {
 	const user = this;
 	const token = jwt.sign({ _id: user.id }, 'podmojesobe');
+	console.log(token);
+
+	user.tokens.push({ token });
+	user.save();
+
 	return token;
 };
 
 userSchema.statics.findByCredentials = async (email, password) => {
 	const user = await User.findOne({ email });
-	console.log(user);
 
 	if (!user) {
 		throw new Error('Unable to login');
