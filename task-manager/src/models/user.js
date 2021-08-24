@@ -52,7 +52,7 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.findByCredentials = async (email, password) => {
-	const user = await User.findOne({ email: 'matija@mail.com' });
+	const user = await User.findOne({ email });
 	console.log(user);
 
 	if (!user) {
