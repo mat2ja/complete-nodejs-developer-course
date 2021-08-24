@@ -52,7 +52,8 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.findByCredentials = async (email, password) => {
-	const user = await User.findOne({ age: 23 });
+	const user = await User.findOne({ email: 'matija@mail.com' });
+	console.log(user);
 
 	if (!user) {
 		throw new Error('Unable to login');
