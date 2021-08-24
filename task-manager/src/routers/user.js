@@ -20,7 +20,8 @@ router.post('/users/login', async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		const user = await User.findByCredentials(email, password);
-		res.send(user);
+		const token = await user.generateAuthToken();
+		res.send({ user, token });
 	} catch (error) {
 		res.status(400).send({ error: error.message });
 	}
@@ -44,7 +45,7 @@ router.get('/users/:id', async (req, res) => {
 		if (!user) {
 			return res.status(404).send({ error: 'User not found' });
 		}
-		res.status(202).send(user);
+		res.status(202).send({ user });
 	} catch (error) {
 		res.status(400).send({ error: 'Error fetching user' });
 	}

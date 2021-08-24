@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcript from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const { Schema } = mongoose;
 const { isEmail } = validator;
@@ -50,6 +51,12 @@ const userSchema = new Schema({
 		max: [120, 'Too old'],
 	},
 });
+
+userSchema.methods.generateAuthToken = async function () {
+	const user = this;
+	const token = jwt.sign({ _id: user.id }, 'podmojesobe');
+	return token;
+};
 
 userSchema.statics.findByCredentials = async (email, password) => {
 	const user = await User.findOne({ email });

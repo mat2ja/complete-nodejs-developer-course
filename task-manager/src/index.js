@@ -15,8 +15,11 @@ app.listen(port, () => console.log(`Server is up on port:${port}`));
 import jwt from 'jsonwebtoken';
 
 const myFn = async () => {
-	const token = jwt.sign({ _id: 'abc123' }, 'thisismyrandomprivatekey');
+	const token = jwt.sign({ _id: 'abc123' }, 'thisismyrandomprivatekey', {
+		expiresIn: '7 days',
+	});
 	console.log('token:', token);
+
 	const data = jwt.verify(token, 'thisismyrandomprivatekey');
 	console.log(data);
 };
