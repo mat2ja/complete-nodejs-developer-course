@@ -17,13 +17,25 @@ router.post('/users', async (req, res) => {
 });
 
 
+// Login user
+router.post('/users/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log(email, password);
+        const user = await User.findByCredentials(email, password);
+        res.send(user);
+    } catch (err) {
+        res.status(400).send();
+    }
+})
+
 // Fetch all users
 router.get('/users', async (req, res) => {
     try {
         const users = await User.find({});
         res.status(200).send(users);
     } catch (error) {
-        res.status(400).send();
+        res.status(400).send({ error });
     }
 });
 

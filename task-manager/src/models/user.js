@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
-import bcript from 'bcryptjs'
+import bcript from 'bcryptjs';
 
 const { Schema } = mongoose;
 const { isEmail } = validator;
@@ -15,8 +15,9 @@ const userSchema = new Schema({
 	},
 	email: {
 		type: String,
+		unique: true,
 		required: [true, 'Email not provided'],
-		trum: true,
+		trim: true,
 		lowercase: true,
 		validate(value) {
 			if (!isEmail(value)) {
@@ -50,14 +51,29 @@ const userSchema = new Schema({
 	},
 });
 
-userSchema.pre('save', async function (next) {
-	const user = this
-	if (user.isModified('password')) {
-		user.password = await bcript.hash(user.password, 8)
+userSchema.statics.findByCredentials = async (email, password) => {
+	const user = await User.findOne({ age: 23 });
+	console.log(user);
+
+	if (!user) {
+		throw new Error('Unable to login');
 	}
 
-	next()
-})
+	const isMatch = await bcript.compare(password, user.password);
+
+	if (!isMatch) {
+		throw new Error('Unable to login');
+	}
+};
+
+// Hash the plain text password
+userSchema.pre('save', async function (next) {
+	const user = this;
+	if (user.isModified('password')) {
+		user.password = await bcript.hash(user.password, 8);
+	}
+	next();
+});
 
 const User = new mongoose.model('User', userSchema);
 
