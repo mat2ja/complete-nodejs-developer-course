@@ -30,15 +30,9 @@ router.post('/users/login', async (req, res) => {
 	}
 });
 
-// Fetch all users
-router.get('/users', auth, async (req, res) => {
-	console.log('req.user :>> ', req.user);
-	try {
-		const users = await User.find({});
-		res.status(200).send(users);
-	} catch (error) {
-		res.status(400).send({ error });
-	}
+// Fetch profile
+router.get('/users/me', auth, async (req, res) => {
+	res.status(200).send(req.user);
 });
 
 // Fetch a user by id
