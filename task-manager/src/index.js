@@ -7,12 +7,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
-	if (req.method === 'GET') {
-		res.status(403).send('GET requests are disabled');
-	} else {
-		next();
-	}
-});
+	res.status(503).send('Maintenance in progress. Come again later.')
+})
 app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
