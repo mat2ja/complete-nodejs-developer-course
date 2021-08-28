@@ -30,6 +30,19 @@ router.post('/users/login', async (req, res) => {
 	}
 });
 
+// Logout user
+router.post('/users/logout', auth, async (req, res) => {
+	try {
+		req.user.tokens = req.user.tokens.filter(
+			(token) => token.token != req.token
+		);
+		await req.user.save();
+		res.send();
+	} catch (error) {
+		res.status(500).send();
+	}
+});
+
 // Fetch profile
 router.get('/users/me', auth, async (req, res) => {
 	res.status(200).send(req.user);
