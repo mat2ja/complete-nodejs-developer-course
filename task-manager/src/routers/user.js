@@ -1,5 +1,6 @@
 import express from 'express';
 import User from '../models/user.js';
+import auth from '../middleware/auth.js';
 
 const router = new express.Router();
 
@@ -30,7 +31,7 @@ router.post('/users/login', async (req, res) => {
 });
 
 // Fetch all users
-router.get('/users', async (req, res) => {
+router.get('/users', auth, async (req, res) => {
 	try {
 		const users = await User.find({});
 		res.status(200).send(users);
