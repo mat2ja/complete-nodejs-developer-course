@@ -11,6 +11,7 @@ const userSchema = new Schema({
 		type: String,
 		required: [true, 'Name not provided'],
 		minLength: [2, 'Name too short'],
+		maxLength: [24, 'Name too long'],
 		trim: true,
 		lowercase: true,
 	},
