@@ -11,7 +11,7 @@ router.post('/users', async (req, res) => {
 		await user.save();
 		const { email, password } = req.body;
 		const token = await user.generateAuthToken(email, password);
-		res.status(201).send({ user, token });
+		res.status(201).send({ user: user.getPublicProfile(), token });
 	} catch (error) {
 		// https://httpstatuses.com/
 		res.status(400).send({ error });
@@ -24,7 +24,7 @@ router.post('/users/login', async (req, res) => {
 		const { email, password } = req.body;
 		const user = await User.findByCredentials(email, password);
 		const token = await user.generateAuthToken();
-		res.send({ user, token });
+		res.send({ user: user.getPublicProfile(), token });
 	} catch (error) {
 		res.status(400).send({ error: error.message });
 	}
