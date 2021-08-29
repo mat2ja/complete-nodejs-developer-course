@@ -13,7 +13,6 @@ router.post('/users', async (req, res) => {
 		const token = await user.generateAuthToken(email, password);
 		res.status(201).send({ user: user.getPublicProfile(), token });
 	} catch (error) {
-		// https://httpstatuses.com/
 		res.status(400).send({ error });
 	}
 });
@@ -24,7 +23,7 @@ router.post('/users/login', async (req, res) => {
 		const { email, password } = req.body;
 		const user = await User.findByCredentials(email, password);
 		const token = await user.generateAuthToken();
-		res.send({ user: user.getPublicProfile(), token });
+		res.send({ user, token });
 	} catch (error) {
 		res.status(400).send({ error: error.message });
 	}
@@ -86,9 +85,6 @@ router.patch('/users/:id', async (req, res) => {
 	}
 
 	try {
-		// doesn't trigger middleware nor default runValidators
-		// const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-
 		const user = await User.findById(req.params.id);
 		if (!user) {
 			return res.status(404).send({ error: 'User not found' });
