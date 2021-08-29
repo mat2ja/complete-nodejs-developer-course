@@ -11,13 +11,3 @@ app.use(userRouter);
 app.use(taskRouter);
 
 app.listen(port, () => console.log(`Server is up on port:${port}`));
-
-const pet = {
-	name: 'megi',
-};
-
-pet.toJSON = function () {
-	return {};
-};
-
-console.log(JSON.stringify(pet));
