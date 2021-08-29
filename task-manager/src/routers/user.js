@@ -11,7 +11,7 @@ router.post('/users', async (req, res) => {
 		await user.save();
 		const { email, password } = req.body;
 		const token = await user.generateAuthToken(email, password);
-		res.status(201).send({ user: user.getPublicProfile(), token });
+		res.status(201).send({ user: user, token });
 	} catch (error) {
 		res.status(400).send({ error });
 	}
@@ -55,22 +55,8 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 
 // Fetch profile
 router.get('/users/me', auth, async (req, res) => {
-	res.status(200).send(req.user);
+	res.send(req.user);
 });
-
-// Fetch a user by id
-// router.get('/users/:id', async (req, res) => {
-// 	const _id = req.params.id;
-// 	try {
-// 		const user = await User.findById(_id);
-// 		if (!user) {
-// 			return res.status(404).send({ error: 'User not found' });
-// 		}
-// 		res.status(202).send({ user });
-// 	} catch (error) {
-// 		res.status(400).send({ error: 'Error fetching user' });
-// 	}
-// });
 
 // Update a user
 router.patch('/users/:id', auth, async (req, res) => {
@@ -91,21 +77,17 @@ router.patch('/users/:id', auth, async (req, res) => {
 		}
 		updates.forEach((update) => (user[update] = req.body[update]));
 		await user.save();
-		res.status(200).send(user);
+		res.send(user);
 	} catch (error) {
 		res.status(400).send({ error });
 	}
 });
 
 // Delete a user
-router.delete('/users/:id', auth, async (req, res) => {
+router.delete('/users/me', auth, async (req, res) => {
 	try {
-		const user = await User.findByIdAndDelete(req.params.id);
-		console.log(user);
-		if (!user) {
-			return res.status(404).send({ error: 'User not found' });
-		}
-		return res.status(200).send(user);
+		await req.user.remove();
+		return res.send('User deleted');
 	} catch (error) {
 		res.status(500).send({ error });
 	}
