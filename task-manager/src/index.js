@@ -11,3 +11,13 @@ app.use(userRouter);
 app.use(taskRouter);
 
 app.listen(port, () => console.log(`Server is up on port:${port}`));
+
+import Task from './models/task.js';
+
+const main = async () => {
+	const task = await Task.findById('612bc249fb6dd5d67eb600ff');
+	await task.populate('owner').execPopulate();
+	console.log(task.owner);
+};
+
+main();

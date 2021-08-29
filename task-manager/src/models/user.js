@@ -71,7 +71,6 @@ userSchema.methods.generateAuthToken = async function () {
 	return token;
 };
 
-// res.send is calling JSON.stringify() which looks for functions named toJSON in the object being serialized and returns value from toJSON() instead.
 userSchema.methods.toJSON = function () {
 	const user = this;
 	const userObject = user.toObject();
