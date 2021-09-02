@@ -78,9 +78,13 @@ userSchema.virtual('tasks', {
 	foreignField: 'owner',
 });
 
+userSchema.virtual('agemail').get(function () {
+	return `You are ${this.age} and say hi via ${this.email}`;
+});
+
 userSchema.methods.toJSON = function () {
 	const user = this;
-	const userObject = user.toObject();
+	const userObject = user.toObject({ virtuals: true });
 
 	delete userObject.password;
 	delete userObject.tokens;
