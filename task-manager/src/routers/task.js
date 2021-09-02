@@ -66,12 +66,11 @@ router.patch('/tasks/:id', auth, async (req, res) => {
 			}
 		);
 		if (!task) {
-			throw new Error('Task not found');
+			return res.status(404).send({ error: 'Task not found' });
 		}
-		console.log('task:', task);
 		return res.send(task);
 	} catch (error) {
-		res.status(404).send({ error: error.message });
+		res.status(404).send({ error });
 	}
 });
 
