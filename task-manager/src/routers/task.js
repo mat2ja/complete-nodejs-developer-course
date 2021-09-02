@@ -1,5 +1,6 @@
 import express from 'express';
 import Task from '../models/task.js';
+import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 
 const router = new express.Router();
@@ -19,10 +20,10 @@ router.post('/tasks', auth, async (req, res) => {
 });
 
 // Fetch all tasks
-router.get('/tasks', async (req, res) => {
+router.get('/tasks', auth, async (req, res) => {
 	try {
-		const tasks = await Task.find({});
-		res.status(200).send(tasks);
+		const user = await User.findById(req.user._id).populate('tasks');
+		res.status(200).send(user.tasks);
 	} catch (error) {
 		res.status(400).send();
 	}
@@ -33,7 +34,6 @@ router.get('/tasks/:id', auth, async (req, res) => {
 	const _id = req.params.id;
 	try {
 		const task = await Task.findOne({ _id, owner: req.user._id });
-
 		if (!task) {
 			return res.status(404).send({ error: 'Task not found' });
 		}
