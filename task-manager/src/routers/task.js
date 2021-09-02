@@ -1,6 +1,5 @@
 import express from 'express';
 import Task from '../models/task.js';
-import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 
 const router = new express.Router();
@@ -22,10 +21,10 @@ router.post('/tasks', auth, async (req, res) => {
 // Fetch all tasks
 router.get('/tasks', auth, async (req, res) => {
 	try {
-		// const user = await User.findById(req.user._id).populate('tasks');
-		// res.status(200).send(user.tasks);
-		const tasks = await Task.find({ owner: req.user._id });
-		res.status(200).send(tasks);
+		// const tasks = await Task.find({ owner: req.user._id });
+		// res.send(tasks);
+		await req.user.populate('tasks').execPopulate();
+		res.send(req.user.tasks);
 	} catch (error) {
 		res.status(400).send();
 	}
@@ -65,7 +64,7 @@ router.patch('/tasks/:id', async (req, res) => {
 		if (!task) {
 			res.status(404).send({ error: 'Task not found' });
 		}
-		return res.status(200).send(task);
+		return res.send(task);
 	} catch (error) {
 		res.status(400).send({ error });
 	}
@@ -78,7 +77,7 @@ router.delete('/tasks/:id', async (req, res) => {
 		if (!task) {
 			return res.status(404).send({ error: 'Task not found' });
 		}
-		return res.status(200).send(task);
+		return res.send(task);
 	} catch (error) {
 		res.status(500).send({ error });
 	}
