@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcript from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import Task from './task.js';
 
 const { Schema } = mongoose;
 const { isEmail } = validator;
@@ -71,13 +72,11 @@ userSchema.methods.generateAuthToken = async function () {
 	return token;
 };
 
-// not stored in db, they are like computed properties
 userSchema.virtual('tasks', {
 	ref: 'Task',
 	localField: '_id',
 	foreignField: 'owner',
 });
-
 
 userSchema.methods.toJSON = function () {
 	const user = this;
@@ -111,6 +110,13 @@ userSchema.pre('save', async function (next) {
 	if (user.isModified('password')) {
 		user.password = await bcript.hash(user.password, 8);
 	}
+	next();
+});
+
+// Delete user tasks when user is removed
+userSchema.pre('remove', async function (next) {
+	const user = this;
+	await Task.deleteMany({ owner: user._id });
 	next();
 });
 
