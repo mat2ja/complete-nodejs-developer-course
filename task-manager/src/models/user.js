@@ -7,60 +7,65 @@ import Task from './task.js';
 const { Schema } = mongoose;
 const { isEmail } = validator;
 
-const userSchema = new Schema({
-	name: {
-		type: String,
-		required: [true, 'Name not provided'],
-		minLength: [2, 'Name too short'],
-		maxLength: [24, 'Name too long'],
-		trim: true,
-		lowercase: true,
-	},
-	email: {
-		type: String,
-		unique: true,
-		required: [true, 'Email not provided'],
-		trim: true,
-		lowercase: true,
-		validate(value) {
-			if (!isEmail(value)) {
-				throw new Error('Email not valid');
-			}
+const userSchema = new Schema(
+	{
+		name: {
+			type: String,
+			required: [true, 'Name not provided'],
+			minLength: [2, 'Name too short'],
+			maxLength: [24, 'Name too long'],
+			trim: true,
+			lowercase: true,
 		},
-	},
-	password: {
-		type: String,
-		required: true,
-		trim: true,
-		minLength: [6, 'Password must be at least 6 characters'],
-		validate(value) {
-			if (value.toLowerCase().includes('password')) {
-				throw new Error(`Password can't contain word 'password'`);
-			}
-		},
-	},
-	age: {
-		type: Number,
-		default: 0,
-		validate(value) {
-			if (value < 0) {
-				throw new Error('Age must be positive number');
-			}
-			if (!Number.isInteger(value)) {
-				throw new Error('Age must be a whole number');
-			}
-		},
-		max: [120, 'Too old'],
-	},
-	tokens: [
-		{
-			token: {
-				type: String,
-				required: true,
+		email: {
+			type: String,
+			unique: true,
+			required: [true, 'Email not provided'],
+			trim: true,
+			lowercase: true,
+			validate(value) {
+				if (!isEmail(value)) {
+					throw new Error('Email not valid');
+				}
 			},
 		},
-	],
-});
+		password: {
+			type: String,
+			required: true,
+			trim: true,
+			minLength: [6, 'Password must be at least 6 characters'],
+			validate(value) {
+				if (value.toLowerCase().includes('password')) {
+					throw new Error(`Password can't contain word 'password'`);
+				}
+			},
+		},
+		age: {
+			type: Number,
+			default: 0,
+			validate(value) {
+				if (value < 0) {
+					throw new Error('Age must be positive number');
+				}
+				if (!Number.isInteger(value)) {
+					throw new Error('Age must be a whole number');
+				}
+			},
+			max: [120, 'Too old'],
+		},
+		tokens: [
+			{
+				token: {
+					type: String,
+					required: true,
+				},
+			},
+		],
+	},
+	{
+		timestamps: true,
+	}
+);
 
 userSchema.methods.generateAuthToken = async function () {
 	const user = this;
