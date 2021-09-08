@@ -93,18 +93,13 @@ router.delete('/users/me', auth, async (req, res) => {
 const upload = multer({
 	dest: 'avatars',
 	limits: {
-		// size in bytes - 1MB
+		// size in bytes → 1MB
 		fileSize: 1 * 1024 * 1024,
 	},
 	fileFilter(req, file, cb) {
-		console.log(file);
-		// const fileTypeRegex = /.+\/doc|docx$/;
-		// if (!file.mimetype.match(fileTypeRegex)) {
-		// 	cb(new Error('You must upload a doc or docx you dimbuss!!!'));
-		// }
-		const fileTypeRegex = /.+\.doc|docx$/;
-		if (!file.originalname.match(fileTypeRegex)) {
-			cb(new Error('You must upload a doc or docx you dimbuss!!!'));
+		const fileTypeRegex = /image\/jpg|jpeg|png$/;
+		if (!file.mimetype.match(fileTypeRegex)) {
+			cb(new Error('You must upload an image you dimbuss!!!'));
 		}
 		cb(null, true);
 	},
@@ -112,7 +107,6 @@ const upload = multer({
 
 // Upload user avatar
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-	console.log('req.file', req.file);
 	res.send('Avatar uploaded');
 });
 
