@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 
@@ -87,6 +88,15 @@ router.delete('/users/me', auth, async (req, res) => {
 	} catch (error) {
 		res.status(500).send({ error });
 	}
+});
+
+const upload = multer({
+	dest: 'avatars',
+});
+
+// Upload user avatar
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+	res.send('Avatar uploaded');
 });
 
 export default router;
