@@ -97,9 +97,14 @@ const upload = multer({
 		fileSize: 1 * 1024 * 1024,
 	},
 	fileFilter(req, file, cb) {
-		console.log('FILE:', file);
-		if (!file.mimetype.endsWith('pdf')) {
-			cb(new Error('You must upload a PDF you dimbuss!!!'));
+		console.log(file);
+		// const fileTypeRegex = /.+\/doc|docx$/;
+		// if (!file.mimetype.match(fileTypeRegex)) {
+		// 	cb(new Error('You must upload a doc or docx you dimbuss!!!'));
+		// }
+		const fileTypeRegex = /.+\.doc|docx$/;
+		if (!file.originalname.match(fileTypeRegex)) {
+			cb(new Error('You must upload a doc or docx you dimbuss!!!'));
 		}
 		cb(null, true);
 	},
