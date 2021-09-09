@@ -106,4 +106,10 @@ router.post(
 	}
 );
 
+router.delete('/users/me/avatar', auth, async (req, res) => {
+	req.user.avatar = undefined;
+	await req.user.save();
+	res.send('Avatar deleted');
+});
+
 export default router;
