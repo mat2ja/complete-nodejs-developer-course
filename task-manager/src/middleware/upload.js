@@ -1,10 +1,11 @@
 import multer from 'multer';
 
+const megabytesToBytes = (bytes) => bytes * 1024 ** 2;
+
 const upload = multer({
 	dest: 'avatars',
 	limits: {
-		// size in bytes → 1MB
-		fileSize: 1 * 1024 * 1024,
+		fileSize: megabytesToBytes(1),
 	},
 	fileFilter(req, file, cb) {
 		const fileTypeRegex = /image\/jpg|jpeg|png$/;

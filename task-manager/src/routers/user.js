@@ -1,7 +1,7 @@
 import express from 'express';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
-import upload from '../middleware/fileUpload.js';
+import upload from '../middleware/upload.js';
 
 const router = new express.Router();
 
@@ -93,10 +93,12 @@ router.delete('/users/me', auth, async (req, res) => {
 // Upload user avatar
 router.post(
 	'/users/me/avatar',
+	auth,
 	upload.single('avatar'),
 	(req, res) => {
 		res.send('Avatar uploaded');
 	},
+	// middleware error handling/restructuring
 	(error, req, res, next) => {
 		res.status(400).send({ error: error.message });
 	}
