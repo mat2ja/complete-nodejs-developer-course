@@ -105,9 +105,21 @@ const upload = multer({
 	},
 });
 
+const errorMiddleware = (req, res, next) => {
+	throw new Error('from my middleware');
+};
+
 // Upload user avatar
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-	res.send('Avatar uploaded');
-});
+router.post(
+	'/users/me/avatar',
+	errorMiddleware,
+	(req, res) => {
+		res.send('Avatar uploaded');
+	},
+	(error, req, res, next) => {
+		// customize error thrown - before it would be return html with error msg
+		res.status(400).send();
+	}
+);
 
 export default router;
