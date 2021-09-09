@@ -110,16 +110,12 @@ const errorMiddleware = (req, res, next) => {
 };
 
 // Upload user avatar
-router.post(
-	'/users/me/avatar',
-	errorMiddleware,
-	(req, res) => {
-		res.send('Avatar uploaded');
-	},
-	(error, req, res, next) => {
-		// customize error thrown - before it would be return html with error msg
-		res.status(400).send();
-	}
-);
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+	res.send('Avatar uploaded');
+});
+
+router.use((error, req, res, next) => {
+	res.status(400).send({ error: error.message });
+});
 
 export default router;
