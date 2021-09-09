@@ -95,7 +95,9 @@ router.post(
 	'/users/me/avatar',
 	auth,
 	upload.single('avatar'),
-	(req, res) => {
+	async (req, res) => {
+		req.user.avatar = req.file.buffer;
+		await req.user.save();
 		res.send('Avatar uploaded');
 	},
 	// middleware error handling/restructuring

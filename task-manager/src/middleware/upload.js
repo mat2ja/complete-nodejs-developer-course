@@ -3,7 +3,8 @@ import multer from 'multer';
 const megabytesToBytes = (bytes) => bytes * 1024 ** 2;
 
 const upload = multer({
-	dest: 'avatars',
+	// dest removed, thus middleware passes buffer to the function instead of storing it on file system
+	// dest: 'avatars',
 	limits: {
 		fileSize: megabytesToBytes(1),
 	},
