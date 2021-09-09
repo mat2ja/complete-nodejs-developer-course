@@ -1,7 +1,7 @@
 import express from 'express';
-import multer from 'multer';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
+import upload from '../middleware/fileUpload.js';
 
 const router = new express.Router();
 
@@ -90,32 +90,16 @@ router.delete('/users/me', auth, async (req, res) => {
 	}
 });
 
-const upload = multer({
-	dest: 'avatars',
-	limits: {
-		// size in bytes → 1MB
-		fileSize: 1 * 1024 * 1024,
-	},
-	fileFilter(req, file, cb) {
-		const fileTypeRegex = /image\/jpg|jpeg|png$/;
-		if (!file.mimetype.match(fileTypeRegex)) {
-			cb(new Error('You must upload an image you dimbuss!!!'));
-		}
-		cb(null, true);
-	},
-});
-
-const errorMiddleware = (req, res, next) => {
-	throw new Error('from my middleware');
-};
-
 // Upload user avatar
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-	res.send('Avatar uploaded');
-});
-
-router.use((error, req, res, next) => {
-	res.status(400).send({ error: error.message });
-});
+router.post(
+	'/users/me/avatar',
+	upload.single('avatar'),
+	(req, res) => {
+		res.send('Avatar uploaded');
+	},
+	(error, req, res, next) => {
+		res.status(400).send({ error: error.message });
+	}
+);
 
 export default router;
