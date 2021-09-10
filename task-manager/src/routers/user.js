@@ -1,4 +1,5 @@
 import express from 'express';
+import sharp from 'sharp';
 import FileType from 'file-type';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
@@ -97,7 +98,11 @@ router.post(
 	auth,
 	upload.single('avatar'),
 	async (req, res) => {
-		req.user.avatar = req.file.buffer;
+		const buffer = await sharp(req.file.buffer)
+			.resize({ width: 250, height: 250 })
+			.png()
+			.toBuffer();
+		req.user.avatar = buffer;
 		await req.user.save();
 		res.send('Avatar uploaded');
 	},
@@ -123,7 +128,6 @@ router.get('/users/:id/avatar', async (req, res) => {
 		}
 
 		const { mime } = await FileType.fromBuffer(user.avatar);
-		console.log(mime);
 
 		res.set('Content-Type', mime);
 		res.send(user.avatar);
