@@ -1,4 +1,5 @@
 import express from 'express';
+import FileType from 'file-type';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 import upload from '../middleware/upload.js';
@@ -106,10 +107,29 @@ router.post(
 	}
 );
 
+// Delete user avatar
 router.delete('/users/me/avatar', auth, async (req, res) => {
 	req.user.avatar = undefined;
 	await req.user.save();
 	res.send('Avatar deleted');
+});
+
+// Fetch avatar
+router.get('/users/:id/avatar', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+		if (!user || !user.avatar) {
+			throw new Error();
+		}
+
+		const { mime } = await FileType.fromBuffer(user.avatar);
+		console.log(mime);
+
+		res.set('Content-Type', mime);
+		res.send(user.avatar);
+	} catch (error) {
+		res.status(404).send({ error: 'Avatar not found' });
+	}
 });
 
 export default router;

@@ -9,7 +9,7 @@ const upload = multer({
 		fileSize: megabytesToBytes(1),
 	},
 	fileFilter(req, file, cb) {
-		const fileTypeRegex = /image\/jpg|jpeg|png$/;
+		const fileTypeRegex = /image\/jpg|jpeg|png|gif$/;
 		if (!file.mimetype.match(fileTypeRegex)) {
 			cb(new Error('You must upload an image you dimbuss!!!'));
 		}
