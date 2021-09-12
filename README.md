@@ -4,18 +4,16 @@
 
 ## Course projects
 
-- [Weather App (Heroku)](https://matijao-weather.herokuapp.com/)
+#### [Weather App (Heroku)](https://matijao-weather.herokuapp.com/)
 
 ---
 
-## Task Manager API
+#### [Task Manager API](https://matijao-task-manager.herokuapp.com)
 
-- Node.js, Express.js, MongoDB, Mongoose
+- Node & Express, MongoDB & Mongoose
 - No GUI and no docs yet, but it works
 
-### [Heroku Deploy](https://matijao-task-manager.herokuapp.com)
 
----
 
 ![image](https://user-images.githubusercontent.com/46557266/132994824-a3062e7b-ab99-40e6-b55d-ace9e463f717.png)
 
