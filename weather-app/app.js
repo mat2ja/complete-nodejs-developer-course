@@ -26,5 +26,3 @@ if (!address) {
     });
   });
 }
-
-process.env.
