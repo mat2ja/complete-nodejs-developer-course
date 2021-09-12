@@ -1,1 +1,6 @@
-sendgrid.env
+node_modules/
+.env
+.vscode
+.vercel
+task-manager/avatars
+task-manager/config
