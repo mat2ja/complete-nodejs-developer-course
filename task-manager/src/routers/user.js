@@ -4,6 +4,8 @@ import FileType from 'file-type';
 import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 import upload from '../middleware/upload.js';
+import emailService from '../emails/account.js';
+const { sendWelcomeEmail, sendCancelationEmail } = emailService;
 
 const router = new express.Router();
 
@@ -12,8 +14,8 @@ router.post('/users', async (req, res) => {
 	const user = new User(req.body);
 	try {
 		await user.save();
-		const { email, password } = req.body;
-		const token = await user.generateAuthToken(email, password);
+		sendWelcomeEmail(req.body.email, req.body.name);
+		const token = await user.generateAuthToken();
 		res.status(201).send({ user, token });
 	} catch (error) {
 		res.status(400).send({ error });
@@ -85,7 +87,9 @@ router.patch('/users/me', auth, async (req, res) => {
 // Delete a user
 router.delete('/users/me', auth, async (req, res) => {
 	try {
+		const { email, name } = req.user;
 		await req.user.remove();
+		sendCancelationEmail(email, name);
 		return res.send('User deleted');
 	} catch (error) {
 		res.status(500).send({ error });
