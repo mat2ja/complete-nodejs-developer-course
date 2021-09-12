@@ -1,13 +1,10 @@
 import mongoose from 'mongoose';
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'task-manager-api';
-
-mongoose.connect(`${url}/${dbName}`, {
+mongoose.connect(process.env.MONGOOSE_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
-	useFindAndModify: false
+	useFindAndModify: false,
 });
 
 const db = mongoose.connection;
