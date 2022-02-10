@@ -12,6 +12,9 @@
 - No GUI, only pure API
 
 
+[Api Postman Documentation](https://documenter.getpostman.com/view/15639222/UVeMGNgo)
+
+
 ![image](https://user-images.githubusercontent.com/46557266/132994824-a3062e7b-ab99-40e6-b55d-ace9e463f717.png)
 
 To run it locally, define the following .env variables, and run `npm run dev`
